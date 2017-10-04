@@ -20,6 +20,7 @@ CREATE TABLE IF NOT EXISTS message (
   id SERIAL PRIMARY KEY,
   sender BIGINT UNSIGNED NOT NULL,
   receiver BIGINT UNSIGNED NOT NULL,
+  content VARCHAR(140) NOT NULL,
   sendDate DATETIME NOT NULL,
   status INT NULL,
   FOREIGN KEY fk_sender(sender) REFERENCES user(id),

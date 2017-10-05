@@ -12,5 +12,5 @@
 1. Padrão State -> Informações sobre o status do usuário (ex.: Online, Ausente, Ocupado, Offline).
 1. Factory Method ->
 1. Padrão Observer -> Informações de novas mensagens recebidas.
-1. Padrão Template -> impressão de mensagens personalizadas sobre atualização de status.
+1. Padrão Template -> impressão de mensagens personalizadas sobre atualização de status. *OK*
 1. Padrão Strategy -> Utilização em postagens pagas, possibilitando formas de pagamento diferentes para planos diferentes.

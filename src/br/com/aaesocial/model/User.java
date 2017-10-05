@@ -1,8 +1,17 @@
 package br.com.aaesocial.model;
 
+import br.com.aaesocial.strategy.PriceStrategy;
+
 import java.time.LocalDate;
 
-public class User {
+public abstract class User {
+
+    public User(PriceStrategy priceStrategy) {
+        this.priceStrategy = priceStrategy;
+    }
+
+    private PriceStrategy priceStrategy;
+
     private String email;
 
     private String password;
@@ -62,4 +71,5 @@ public class User {
     public void setPhotoUrl(String photoUrl) {
         this.photoUrl = photoUrl;
     }
+
 }

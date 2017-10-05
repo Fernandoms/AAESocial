@@ -15,14 +15,9 @@ public class FrontController extends HttpServlet {
 
         try {
             cmd = (Command) Class.forName("br.com.aaesocial.controller.Command" + request.getParameter("action")).newInstance();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InstantiationException e) {
+        } catch (ClassNotFoundException | IllegalAccessException | InstantiationException e) {
             e.printStackTrace();
         }
-
         cmd.execute(request, response);
     }
 

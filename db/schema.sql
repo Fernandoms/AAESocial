@@ -12,9 +12,10 @@ CREATE TABLE IF NOT EXISTS user (
   firstName VARCHAR(100) NOT NULL,
   lastName VARCHAR(100) NOT NULL,
   birthDate DATETIME NOT NULL,
+  corporative BOOLEAN DEFAULT FALSE,
   photoUrl VARCHAR(255) NULL,
   notify BOOLEAN NULL
-) CHARACTER SET = utf16;
+) CHARACTER SET = utf8;
 
 CREATE TABLE IF NOT EXISTS message (
   id SERIAL PRIMARY KEY,
@@ -25,6 +26,6 @@ CREATE TABLE IF NOT EXISTS message (
   status INT NULL,
   FOREIGN KEY fk_sender(sender) REFERENCES user(id),
   FOREIGN KEY fk_receiver(receiver) REFERENCES user(id)
-) CHARACTER SET = utf16;
+) CHARACTER SET = utf8;
 
 

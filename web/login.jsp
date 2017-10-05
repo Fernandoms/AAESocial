@@ -11,8 +11,9 @@
     <title>Login</title>
 </head>
 <body>
-    <form action="FrontController?action=Login">
-        Name: <input type="text" name="name"/>
+    <form method="POST" action="FrontController">
+        <input type="hidden" name="action" value="Login">
+        Login: <input type="text" name="login"/>
         <br/>
         Password: <input type="password" name="password"/>
         <br/>

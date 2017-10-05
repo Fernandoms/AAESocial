@@ -19,7 +19,7 @@ public class AuthenticationFilter implements Filter {
 
         HttpSession session = httpReq.getSession(false);
 
-        if (session == null) {
+        if (session == null && !httpReq.getRequestURI().endsWith("login.jsp")) {
             httpResp.sendRedirect("login.jsp");
         } else {
             chain.doFilter(httpReq, httpResp);

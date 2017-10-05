@@ -35,6 +35,7 @@ public class CommandProfile implements Command {
         request.setAttribute("messages", messages);
         request.setAttribute("receivers", receivers);
         request.setAttribute("myprofile", user.getId() == sessionUser.getId());
+        request.setAttribute("notifications", user.getNotifications());
         request.getRequestDispatcher("/WEB-INF/profile.jsp").forward(request, response);
     }
 }

@@ -12,6 +12,8 @@ public abstract class User {
 
     private PriceStrategy priceStrategy;
 
+    private Integer id;
+
     private String email;
 
     private String password;
@@ -72,4 +74,11 @@ public abstract class User {
         this.photoUrl = photoUrl;
     }
 
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 }

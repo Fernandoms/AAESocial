@@ -1,5 +1,7 @@
 package br.com.aaesocial.controller;
 
+import br.com.aaesocial.dao.UserDAO;
+import br.com.aaesocial.model.PersonalUser;
 import br.com.aaesocial.model.User;
 
 import javax.servlet.ServletException;
@@ -17,13 +19,18 @@ public class CommandLogin implements Command {
         if (login == null || password == null) {
             request.getRequestDispatcher("login.jsp").forward(request, response);
         } else {
-            // DEVERIA VERIFICAR E PEGAR DO BANCO
-            User user = new User();
-            HttpSession session = request.getSession();
-            session.setAttribute("user", user);
-            session.setMaxInactiveInterval(600);
+            UserDAO dao = new UserDAO();
+            User user = dao.getUser(login, password);
 
-            response.sendRedirect(request.getContextPath() + "/FrontController?action=Profile");
+            if (user == null) {
+                request.getRequestDispatcher("login.jsp").forward(request, response);
+            } else {
+                HttpSession session = request.getSession();
+                session.setAttribute("user", user);
+                session.setMaxInactiveInterval(600);
+
+                response.sendRedirect(request.getContextPath() + "/FrontController?action=Profile");
+            }
         }
     }
 }

@@ -10,8 +10,8 @@ public class DBConnection {
     private static final String TAG = DBConnection.class.getSimpleName();
 
     private static final String DB_URL = "jdbc:mysql://localhost:3306/AAESocial";
-    private static final String DB_USERNAME = "fernandoms";
-    private static final String DB_PASSWORD = "123456";
+    private static final String DB_USERNAME = "root";
+    private static final String DB_PASSWORD = "1234";
 
     private static DBConnection ourInstance = new DBConnection();
     private static Connection connection;

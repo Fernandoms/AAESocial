@@ -13,11 +13,15 @@
 <body>
     <form method="POST" action="FrontController">
         <input type="hidden" name="action" value="Login">
-        Login: <input type="text" name="login"/>
+        Login:
+        <br>
+        <input type="text" name="login"/>
         <br/>
-        Password: <input type="password" name="password"/>
+        Senha:
+        <br>
+        <input type="password" name="password"/>
         <br/>
-        <input type="submit" value="login">
+        <input type="submit" value="Enviar">
     </form>
 </body>
 </html>

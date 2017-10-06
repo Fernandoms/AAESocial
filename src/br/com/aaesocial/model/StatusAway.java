@@ -13,4 +13,14 @@ public class StatusAway implements UserStatusState {
     public UserStatusState idleAccount() {
         return new StatusOffline();
     }
+
+    @Override
+    public String getNotification(User user, Object o) {
+        if (o instanceof Message) {
+            return null;
+        }
+
+        Notification notification = new NotificationStatusChanged();
+        return notification.getNotificationMessage(user);
+    }
 }

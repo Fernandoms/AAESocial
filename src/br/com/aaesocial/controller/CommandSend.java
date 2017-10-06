@@ -17,8 +17,6 @@ public class CommandSend implements Command {
         HttpSession session = request.getSession();
         User sessionUser = (User) session.getAttribute("user");
 
-        sessionUser.notifyAction();
-
         String receiverId = request.getParameter("receiver");
         String content = request.getParameter("messageContent");
 
@@ -30,6 +28,9 @@ public class CommandSend implements Command {
         message.setContent(content);
         message.setSender(sessionUser);
         message.setReceiver(receiver);
+
+        sessionUser.notify(message);
+        sessionUser.accountActivity();
 
         messageDAO.insertMessage(message);
 

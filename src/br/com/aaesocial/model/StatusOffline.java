@@ -12,4 +12,10 @@ public class StatusOffline implements UserStatusState {
     public UserStatusState idleAccount() {
         return this;
     }
+
+    @Override
+    public String getNotification(User user, Object o) {
+        return null;
+    }
+
 }

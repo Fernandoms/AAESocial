@@ -22,9 +22,11 @@ public class CommandProfile implements Command {
         User sessionUser = (User) session.getAttribute("user");
         User user;
 
+        sessionUser.accountActivity();
+
         String idString = request.getParameter("id");
         if (idString != null) {
-            user = (User) userDao.getUser(Integer.parseInt(idString));
+            user = userDao.getUser(Integer.parseInt(idString));
         } else {
             user = sessionUser;
         }

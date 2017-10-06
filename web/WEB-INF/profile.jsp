@@ -72,5 +72,19 @@
         </li>
     </c:forEach>
     </ul>
+    <h2>Mudar status</h2>
+    <form method="POST" action="FrontController">
+        <input type="hidden" name="action" value="Status">
+        <input type="submit" value="Marcar idle">
+    </form>
+    <h2>Calcular valor</h2>
+    <form method="POST" action="FrontController">
+        <input type="hidden" name="action" value="Calculate">
+        <input type="submit" value="Valor">
+    </form>
+    <script>
+        var msg = '${valueToPay}';
+        if (msg) alert(msg);
+    </script>
 </body>
 </html>

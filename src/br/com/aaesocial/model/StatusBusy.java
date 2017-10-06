@@ -12,4 +12,14 @@ public class StatusBusy implements UserStatusState {
     public UserStatusState idleAccount() {
         return new StatusAway();
     }
+
+    @Override
+    public String getNotification(User user, Object o) {
+        if (o instanceof UserStatusState) {
+            return null;
+        }
+
+        Notification notification = new NotificationMessageReceived();
+        return notification.getNotificationMessage(user);
+    }
 }

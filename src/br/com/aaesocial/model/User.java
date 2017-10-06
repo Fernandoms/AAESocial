@@ -1,5 +1,6 @@
 package br.com.aaesocial.model;
 
+import br.com.aaesocial.state.UserStatusState;
 import br.com.aaesocial.strategy.PriceStrategy;
 
 import javax.servlet.ServletContext;
@@ -14,11 +15,14 @@ import java.util.Observer;
 public abstract class User extends Observable implements HttpSessionBindingListener, Observer {
 
     public User(PriceStrategy priceStrategy) {
+        this.notifications = new ArrayList<>();
+        this.status = new StatusOffline();
         this.priceStrategy = priceStrategy;
-        this.setNotifications(new ArrayList<>());
     }
 
     private List<String> notifications;
+
+    private UserStatusState status;
 
     private PriceStrategy priceStrategy;
 
@@ -35,6 +39,8 @@ public abstract class User extends Observable implements HttpSessionBindingListe
     private LocalDate birthDate;
 
     private String photoUrl;
+
+    private double valueToPay;
 
     public String getEmail() {
         return email;
@@ -92,29 +98,44 @@ public abstract class User extends Observable implements HttpSessionBindingListe
         this.id = id;
     }
 
+    public double getValueToPay() {
+        return valueToPay;
+    }
+
+    public void setValueToPay(int messageNumber) {
+        this.valueToPay = this.priceStrategy.valueToPay(messageNumber);
+    }
+
+    public void accountActivity() {
+        this.status = this.status.accountActivity();
+    }
+
+    public void idle() {
+        this.status = this.status.idleAccount();
+        this.notify(this.status);
+    }
+
     public List<String> getNotifications() {
         ArrayList<String> copy = new ArrayList<>();
 
-        for (String s: notifications) {
-            copy.add(s);
-        }
+        copy.addAll(notifications);
 
         notifications.clear();
 
         return copy;
     }
 
-    public void setNotifications(List<String> notifications) { this.notifications = notifications; }
-
-    public void notifyAction() {
+    public void notify(Object o) {
         this.setChanged();
-        this.notifyObservers();
+        this.notifyObservers(o);
     }
 
     @Override
     public void valueBound(HttpSessionBindingEvent event) {
         ServletContext context = event.getSession().getServletContext();
         List<User> logged = (List<User>) context.getAttribute("loggedUsers");
+
+        this.status = this.status.accountActivity();
 
         for(User u: logged) {
             this.addObserver(u);
@@ -129,12 +150,18 @@ public abstract class User extends Observable implements HttpSessionBindingListe
         ServletContext context = event.getSession().getServletContext();
         List<User> logged = (List<User>) context.getAttribute("loggedUsers");
 
+        this.status = this.status.idleAccount();
+
         this.deleteObservers();
         logged.remove(this);
     }
 
     @Override
     public void update(Observable observable, Object o) {
-        notifications.add("I'm mr. meeseeks! Look at me! " + this.id);
+        String notification = this.status.getNotification((User) observable, o);
+
+        if (notification != null) {
+            notifications.add(notification);
+        }
     }
 }

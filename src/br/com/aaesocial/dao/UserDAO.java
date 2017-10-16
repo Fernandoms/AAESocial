@@ -114,6 +114,7 @@ public class UserDAO {
                 user.setEmail(rs.getString("email"));
                 user.setBirthDate(rs.getDate("birthDate").toLocalDate());
                 user.setPhotoUrl(rs.getString("photoUrl"));
+                user.setBgColor(rs.getString("bgColor"));
             }
         } catch (SQLException ex) {
             Logger.getLogger(TAG).log(Level.SEVERE, null, ex);

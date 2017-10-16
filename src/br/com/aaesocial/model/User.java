@@ -99,20 +99,32 @@ public abstract class User extends Observable implements HttpSessionBindingListe
         this.valueToPay = this.priceStrategy.valueToPay(messageNumber);
     }
 
-    public String getPhotoUrl() { return layout.getPhotoUrl(); }
+    public String getPhotoUrl() {
+        return layout.getPhotoUrl();
+    }
 
-    public void setPhotoUrl(String photoUrl) { this.layout.setPhotoUrl(photoUrl); }
+    public void setPhotoUrl(String photoUrl) {
+        this.layout.setPhotoUrl(photoUrl);
+    }
 
-    public String getBgColor() { return layout.getBgColor(); }
+    public String getBgColor() {
+        return this.layout.getBgColor();
+    }
 
-    public void setBgColor(String bgColor) { this.layout.setBgColor(bgColor); }
+    public void setBgColor(String bgColor) {
+        this.layout.setBgColor(bgColor);
+    }
 
     public ProfileLayout getLayout() {
-        return layout;
+        return this.layout;
     }
 
     public void setLayout(ProfileLayout layout) {
         this.layout = layout;
+    }
+
+    public String getBadge() {
+        return this.layout.getBadge();
     }
 
     public void accountActivity() {

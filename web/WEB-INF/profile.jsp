@@ -15,6 +15,9 @@
 <body bgColor="#${user.bgColor}">
     <h1>${user.firstName} ${user.lastName}</h1>
     <img src="${user.photoUrl}" height="100" alt="profile pic" />
+    <c:if test = "${not empty user.badge}">
+        <img src="${pageContext.request.contextPath}/${user.badge}" height="20" alt="profile pic" />
+    </c:if>
     <h2>Notificações</h2>
     <ul>
         <c:forEach items="${notifications}" var="notification">

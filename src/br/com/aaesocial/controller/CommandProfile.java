@@ -25,8 +25,10 @@ public class CommandProfile implements Command {
         sessionUser.accountActivity();
 
         String idString = request.getParameter("id");
-        if (idString != null) {
-            user = userDao.getUser(Integer.parseInt(idString));
+        Integer id = (idString != null) ? Integer.parseInt(idString) : null;
+
+        if (id != null && !id.equals(sessionUser.getId())) {
+            user = userDao.getUser(id);
         } else {
             user = sessionUser;
         }

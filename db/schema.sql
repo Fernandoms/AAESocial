@@ -14,6 +14,7 @@ CREATE TABLE IF NOT EXISTS user (
   birthDate DATETIME NOT NULL,
   corporative BOOLEAN DEFAULT FALSE,
   photoUrl VARCHAR(255) NULL,
+  bgColor VARCHAR(6) NULL,
   notify BOOLEAN NULL
 ) CHARACTER SET = utf8;
 

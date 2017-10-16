@@ -1,5 +1,6 @@
 package br.com.aaesocial.model;
 
+import br.com.aaesocial.memento.ProfileLayoutMemento;
 import br.com.aaesocial.state.UserStatusState;
 import br.com.aaesocial.strategy.PriceStrategy;
 
@@ -15,14 +16,16 @@ import java.util.Observer;
 public abstract class User extends Observable implements HttpSessionBindingListener, Observer {
 
     public User(PriceStrategy priceStrategy) {
+        this.priceStrategy = priceStrategy;
         this.notifications = new ArrayList<>();
         this.status = new StatusOffline();
-        this.priceStrategy = priceStrategy;
     }
 
     private List<String> notifications;
 
     private UserStatusState status;
+
+    private ProfileLayout layout;
 
     private PriceStrategy priceStrategy;
 
@@ -37,8 +40,6 @@ public abstract class User extends Observable implements HttpSessionBindingListe
     private String lastName;
 
     private LocalDate birthDate;
-
-    private String photoUrl;
 
     private double valueToPay;
 
@@ -82,14 +83,6 @@ public abstract class User extends Observable implements HttpSessionBindingListe
         this.birthDate = birthDate;
     }
 
-    public String getPhotoUrl() {
-        return photoUrl;
-    }
-
-    public void setPhotoUrl(String photoUrl) {
-        this.photoUrl = photoUrl;
-    }
-
     public Integer getId() {
         return id;
     }
@@ -106,6 +99,22 @@ public abstract class User extends Observable implements HttpSessionBindingListe
         this.valueToPay = this.priceStrategy.valueToPay(messageNumber);
     }
 
+    public String getPhotoUrl() { return layout.getPhotoUrl(); }
+
+    public void setPhotoUrl(String photoUrl) { this.layout.setPhotoUrl(photoUrl); }
+
+    public String getBgColor() { return layout.getBgColor(); }
+
+    public void setBgColor(String bgColor) { this.layout.setBgColor(bgColor); }
+
+    public ProfileLayout getLayout() {
+        return layout;
+    }
+
+    public void setLayout(ProfileLayout layout) {
+        this.layout = layout;
+    }
+
     public void accountActivity() {
         this.status = this.status.accountActivity();
     }
@@ -113,6 +122,19 @@ public abstract class User extends Observable implements HttpSessionBindingListe
     public void idle() {
         this.status = this.status.idleAccount();
         this.notify(this.status);
+    }
+
+    public ProfileLayoutMemento saveLayoutToMemento() {
+        ProfileLayout layoutCopy = new ProfileLayout();
+
+        layoutCopy.setPhotoUrl(this.layout.getPhotoUrl());
+        layoutCopy.setBgColor(this.layout.getBgColor());
+
+        return new ProfileLayoutMemento(layoutCopy);
+    }
+
+    public void restoreLayoutFromMemento(ProfileLayoutMemento memento) {
+        this.layout = memento.getLayout();
     }
 
     public List<String> getNotifications() {

@@ -12,7 +12,7 @@
 <head>
     <title>Title</title>
 </head>
-<body>
+<body bgColor="#${user.bgColor}">
     <h1>${user.firstName} ${user.lastName}</h1>
     <img src="${user.photoUrl}" height="100" alt="profile pic" />
     <h2>Notificações</h2>
@@ -21,6 +21,9 @@
             <li>${notification}</li>
         </c:forEach>
     </ul>
+    <h2>Layout</h2>
+        <a href="FrontController?action=PreviousLayout">Layout anterior</a>
+        <a href="FrontController?action=NewLayout">Novo layout</a>
     <h2>Mensagens</h2>
     <table>
         <thead>

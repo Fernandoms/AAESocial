@@ -1,11 +1,9 @@
 package br.com.aaesocial.dao;
 
 import br.com.aaesocial.model.FactoryUser;
-import br.com.aaesocial.model.PersonalUser;
 import br.com.aaesocial.model.User;
 
 import java.sql.*;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -21,8 +19,8 @@ public class UserDAO {
     }
 
     public void insertUser(User user) {
-        String sql = "insert into user(email, password, firstName, lastName, birthDate, photoUrl) values" +
-                "(?, ?, ?, ?, ?, ?)";
+        String sql = "insert into user(email, password, firstName, lastName, birthDate, photoUrl, bgColor) values" +
+                "(?, ?, ?, ?, ?, ?, ?)";
 
         try {
             PreparedStatement statement = connection.prepareStatement(sql);
@@ -32,6 +30,7 @@ public class UserDAO {
             statement.setString(4, user.getLastName());
             statement.setDate(5, Date.valueOf(user.getBirthDate()));
             statement.setString(6, user.getPhotoUrl());
+            statement.setString(7, user.getBgColor());
 
             statement.execute();
             statement.close();
@@ -57,6 +56,7 @@ public class UserDAO {
                     user.setFirstName(rs.getString("firstName"));
                     user.setLastName(rs.getString("lastName"));
                     user.setPhotoUrl(rs.getString("photoUrl"));
+                    user.setBgColor(rs.getString("bgColor"));
                     user.setBirthDate(rs.getDate("birthDate").toLocalDate());
                     users.add(user);
                 }
@@ -86,6 +86,7 @@ public class UserDAO {
                 user.setEmail(rs.getString("email"));
                 user.setBirthDate(rs.getDate("birthDate").toLocalDate());
                 user.setPhotoUrl(rs.getString("photoUrl"));
+                user.setBgColor(rs.getString("bgColor"));
             }
         } catch (SQLException ex) {
             Logger.getLogger(TAG).log(Level.SEVERE, null, ex);

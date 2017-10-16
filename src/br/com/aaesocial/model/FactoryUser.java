@@ -2,10 +2,17 @@ package br.com.aaesocial.model;
 
 public class FactoryUser {
     public User getUser(boolean isCoorporative) {
+        ProfileLayout layout = new ProfileLayout();
+        User newUser;
+
         if (isCoorporative) {
-            return new BusinessUser();
+            newUser = new BusinessUser();
         } else {
-            return new PersonalUser();
+            newUser = new PersonalUser();
         }
+
+        newUser.setLayout(layout);
+
+        return newUser;
     }
 }

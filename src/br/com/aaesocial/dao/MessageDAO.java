@@ -55,6 +55,7 @@ public class MessageDAO {
                 sender.setFirstName(rs.getString("firstName"));
                 sender.setLastName(rs.getString("lastName"));
                 sender.setPhotoUrl(rs.getString("photoUrl"));
+                sender.setBgColor(rs.getString("bgColor"));
                 sender.setBirthDate(rs.getDate("birthDate").toLocalDate());
 
                 Message message = new Message();

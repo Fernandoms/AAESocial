@@ -14,3 +14,4 @@
 1. Padrão Observer -> Informações de novas mensagens recebidas. *OK*
 1. Padrão Template -> impressão de mensagens personalizadas sobre atualização de status. *OK*
 1. Padrão Strategy -> Utilização conta prémio com valores diferentes para empresa e pessoal *OK*
+1. Padrão Memento -> Personalização de Layout que permite que ações sejam desfeitas *OK*

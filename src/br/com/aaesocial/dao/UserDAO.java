@@ -48,16 +48,7 @@ public class UserDAO {
 
             while (rs.next()) {
                 if (except.getId() != rs.getInt("id")) {
-                    FactoryUser factoryUser = new FactoryUser();
-                    User user = factoryUser.getUser(rs.getBoolean("corporative"));
-
-                    user.setId(rs.getInt("id"));
-                    user.setEmail(rs.getString("email"));
-                    user.setFirstName(rs.getString("firstName"));
-                    user.setLastName(rs.getString("lastName"));
-                    user.setPhotoUrl(rs.getString("photoUrl"));
-                    user.setBgColor(rs.getString("bgColor"));
-                    user.setBirthDate(rs.getDate("birthDate").toLocalDate());
+                    User user = instanceUser(rs);
                     users.add(user);
                 }
             }
@@ -77,16 +68,7 @@ public class UserDAO {
             ResultSet rs = statement.executeQuery();
 
             while (rs.next()) {
-                FactoryUser factoryUser = new FactoryUser();
-                user = factoryUser.getUser(rs.getBoolean("corporative"));
-
-                user.setId(rs.getInt("id"));
-                user.setFirstName(rs.getString("firstName"));
-                user.setLastName(rs.getString("lastName"));
-                user.setEmail(rs.getString("email"));
-                user.setBirthDate(rs.getDate("birthDate").toLocalDate());
-                user.setPhotoUrl(rs.getString("photoUrl"));
-                user.setBgColor(rs.getString("bgColor"));
+                user = instanceUser(rs);
             }
         } catch (SQLException ex) {
             Logger.getLogger(TAG).log(Level.SEVERE, null, ex);
@@ -105,21 +87,31 @@ public class UserDAO {
             ResultSet rs = statement.executeQuery();
 
             while (rs.next()) {
-                FactoryUser factoryUser = new FactoryUser();
-                user = factoryUser.getUser(rs.getBoolean("corporative"));
-
-                user.setId(rs.getInt("id"));
-                user.setFirstName(rs.getString("firstName"));
-                user.setLastName(rs.getString("lastName"));
-                user.setEmail(rs.getString("email"));
-                user.setBirthDate(rs.getDate("birthDate").toLocalDate());
-                user.setPhotoUrl(rs.getString("photoUrl"));
-                user.setBgColor(rs.getString("bgColor"));
+                user = instanceUser(rs);
             }
         } catch (SQLException ex) {
             Logger.getLogger(TAG).log(Level.SEVERE, null, ex);
         }
 
+        return user;
+    }
+
+    private User instanceUser(ResultSet rs) {
+        User user = null;
+        FactoryUser factoryUser = new FactoryUser();
+        try {
+            user = factoryUser.getUser(rs.getBoolean("corporative"));
+
+            user.setId(rs.getInt("id"));
+            user.setFirstName(rs.getString("firstName"));
+            user.setLastName(rs.getString("lastName"));
+            user.setEmail(rs.getString("email"));
+            user.setBirthDate(rs.getDate("birthDate").toLocalDate());
+            user.setPhotoUrl(rs.getString("photoUrl"));
+            user.setBgColor(rs.getString("bgColor"));
+        } catch (SQLException ex) {
+            Logger.getLogger(TAG).log(Level.SEVERE, null, ex);
+        }
         return user;
     }
 }

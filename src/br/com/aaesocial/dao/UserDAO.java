@@ -9,10 +9,8 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class UserDAO {
+public class UserDAO extends BaseDAO {
     private static final String TAG = UserDAO.class.getSimpleName();
-
-    private Connection connection;
 
     public UserDAO() {
         this.connection = DBConnection.getInstance().getConnection();
@@ -93,25 +91,6 @@ public class UserDAO {
             Logger.getLogger(TAG).log(Level.SEVERE, null, ex);
         }
 
-        return user;
-    }
-
-    private User instanceUser(ResultSet rs) {
-        User user = null;
-        FactoryUser factoryUser = new FactoryUser();
-        try {
-            user = factoryUser.getUser(rs.getBoolean("corporative"));
-
-            user.setId(rs.getInt("id"));
-            user.setFirstName(rs.getString("firstName"));
-            user.setLastName(rs.getString("lastName"));
-            user.setEmail(rs.getString("email"));
-            user.setBirthDate(rs.getDate("birthDate").toLocalDate());
-            user.setPhotoUrl(rs.getString("photoUrl"));
-            user.setBgColor(rs.getString("bgColor"));
-        } catch (SQLException ex) {
-            Logger.getLogger(TAG).log(Level.SEVERE, null, ex);
-        }
         return user;
     }
 }

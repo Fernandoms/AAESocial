@@ -11,10 +11,8 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class MessageDAO {
+public class MessageDAO extends BaseDAO {
     private static final String TAG = MessageDAO.class.getSimpleName();
-
-    private Connection connection;
 
     public MessageDAO() {
         this.connection = DBConnection.getInstance().getConnection();
@@ -46,25 +44,8 @@ public class MessageDAO {
             ResultSet rs = statement.executeQuery();
 
             while (rs.next()) {
-                // Sender
-                FactoryUser factoryUser = new FactoryUser();
-                User sender = factoryUser.getUser(rs.getBoolean("corporative"));
-
-                sender.setId(rs.getInt("id"));
-                sender.setEmail(rs.getString("email"));
-                sender.setFirstName(rs.getString("firstName"));
-                sender.setLastName(rs.getString("lastName"));
-                sender.setPhotoUrl(rs.getString("photoUrl"));
-                sender.setBgColor(rs.getString("bgColor"));
-                sender.setBirthDate(rs.getDate("birthDate").toLocalDate());
-
-                Message message = new Message();
-                message.setReceiver(user);
-                message.setSender(sender);
-                message.setContent(rs.getString("content"));
-                message.setSendDate(rs.getDate("sendDate").toLocalDate());
-
-                messages.add(message);
+                User sender = instanceUser(rs);
+                messages.add(instanceMessage(rs, user, sender));
             }
         } catch (SQLException ex) {
             Logger.getLogger(TAG).log(Level.SEVERE, null, ex);
@@ -72,4 +53,17 @@ public class MessageDAO {
         return messages;
     }
 
+
+    private Message instanceMessage(ResultSet rs, User user, User sender) {
+        Message message = new Message();
+        message.setReceiver(user);
+        message.setSender(sender);
+        try {
+            message.setContent(rs.getString("content"));
+            message.setSendDate(rs.getDate("sendDate").toLocalDate());
+        } catch (SQLException ex) {
+            Logger.getLogger(TAG).log(Level.SEVERE, null, ex);
+        }
+        return message;
+    }
 }
